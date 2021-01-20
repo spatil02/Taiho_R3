@@ -68,7 +68,7 @@ tv_data AS (
 	FROM sv 
 	--WHERE (studyid, visit) NOT IN (SELECT DISTINCT studyid, visit FROM tv_scheduled)
 
-	UNION ALL
+	/*UNION ALL
 	SELECT 
 		DISTINCT studyid::text AS studyid,
 		'99'::numeric AS visitnum,
@@ -78,7 +78,7 @@ tv_data AS (
 		0::int AS visitwindowafter
 	FROM formdata 
 	WHERE (studyid, visit) NOT IN (SELECT DISTINCT studyid, visit FROM sv) 
-	--AND (studyid, visit) NOT IN (SELECT studyid, visit FROM tv_scheduled)
+	--AND (studyid, visit) NOT IN (SELECT studyid, visit FROM tv_scheduled)*/
 	)
 
 SELECT

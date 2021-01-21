@@ -7,8 +7,8 @@ WITH included_sites AS (
                 SELECT DISTINCT studyid, siteid FROM site ),
 
      siteissue_data AS (
-                SELECT  protocol::text AS studyid,
-                        sitenumber::text AS siteid,
+                SELECT  'TAS120_201'::text AS studyid,
+                        concat('TAS120_201_',sitenumber)::text AS siteid,
                         id_::int AS issueid,
                        issue_category_code ::text AS issuetype,
                         issue_category_desc::text AS issuetext,

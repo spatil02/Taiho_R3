@@ -8,7 +8,7 @@ WITH included_sites AS (
  
      sitemonitoringvisit_data AS (
                 SELECT  'TAS0612_101'::text AS studyid,
-                        "site_id"::text AS siteid,
+                        concat('TAS0612_101_',"site_id")::text AS siteid,
 						/*"visit_name"||'_'||row_number() over (partition by "site_#","visit_name"
 						order by convert_to_date(VISIT_START::text))::text  as visitname,*/
 						"site_status"::text AS visitname,

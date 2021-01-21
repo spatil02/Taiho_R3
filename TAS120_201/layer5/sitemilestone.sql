@@ -7,14 +7,14 @@ WITH included_sites AS (
                 SELECT DISTINCT studyid, siteid FROM site),
 
      sitemilestone_data AS (
-                SELECT  'TAS0612_101'::text AS studyid,
-                        concat('TAS0612_101_',site_number)::text AS siteid,
+                SELECT  'TAS120_201'::text AS studyid,
+                        concat('TAS120_201_',site_number)::text AS siteid,
                         row_number() over (partition by site_number,site_status)::int AS milestoneseq,
                         site_status::text AS milestonelabel,
                         'Planned'::text AS milestonetype,
-                        siv_date_planned::date AS expecteddate,
+                        case when (siv_date_planned='N/A' or siv_date_planned='NULL')  then null else siv_date_planned end ::date AS expecteddate,
                         'Yes'::boolean AS ismandatory
-               from tas0612_101_ctms.milestone_status_site )
+from tas120_201_ctms.milestone_status_site )
 
 SELECT 
         /*KEY (sm.studyid || '~' || sm.siteid)::text AS comprehendid, KEY*/

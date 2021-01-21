@@ -9,8 +9,8 @@ WITH included_sites AS (
                 SELECT DISTINCT studyid, siteid FROM site ),
     
     subject_data AS (
-                SELECT  'TAS0612_101'::text AS studyid,
-						"site_key"::	text      AS siteid,
+                 SELECT  'TAS0612_101'::text AS studyid,
+						concat('TAS0612_101_',split_part("site_key",'_',2))::	text      AS siteid,
 						"subject_key"::	text      AS usubjid,
                         null::text AS screenid,
                         null::text AS randid,

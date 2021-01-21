@@ -9,7 +9,7 @@ WITH included_subjects AS (
 
     ae_data AS (
 SELECT "project"::text AS studyid,
-                       ae."SiteNumber"::text AS siteid,
+                       concat(concat("project",'_'),split_part("SiteNumber",'_',2))::text AS siteid,
                        ae."Subject"::text AS usubjid,
                        ae."AETERM_PT"::text AS aeterm,
                        ae."AETERM"::text AS aeverbatim,

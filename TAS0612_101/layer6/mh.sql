@@ -9,7 +9,7 @@ WITH included_subjects AS (
      mh_data AS (
                 
 				SELECT  "project"::text AS studyid,
-                        "SiteNumber"::text AS siteid,
+                        concat(concat("project",'_'),split_part("SiteNumber",'_',2))::text AS siteid,
                         "Subject"::text AS usubjid,
                         "RecordPosition"::int AS mhseq, /*(row_number() over (partition by [studyid],[siteid],[usubjid] order [mhstdtc,mhsttm]))::int AS mhseq,*/
                         "MHTERM"::text AS mhterm,

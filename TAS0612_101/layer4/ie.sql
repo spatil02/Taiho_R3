@@ -8,7 +8,7 @@ WITH included_subjects AS (
 
      ie_data AS (
 				SELECT  "project"::text AS studyid,
-                        "SiteNumber"::text AS siteid,
+                        concat(concat("project",'_'),split_part("SiteNumber",'_',2))::text AS siteid,
                         "Subject"::text AS usubjid,
                         "FolderSeq"::numeric AS visitnum,
                         "FolderName"::text AS visit,
@@ -21,7 +21,7 @@ WITH included_subjects AS (
                         	end)::text AS ietest,
                         null::text AS iecat,
                         null::text AS iescat
-                 from tas0612_101."IE"	ie	
+                from tas0612_101."IE"	ie	
 				group by "project","SiteNumber","Subject","FolderSeq","FolderName","serial_id",iecat,iescat
 				)
 

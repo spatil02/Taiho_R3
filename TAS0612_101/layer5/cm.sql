@@ -30,8 +30,10 @@ WITH included_subjects AS (
                  cmentm
                  from (
                 SELECT  "project"::text AS studyid,
-                        "SiteNumber"::text AS siteid,
-                        substring(trim("Subject"),0,8)::text AS usubjid,
+                        --"SiteNumber"::text AS siteid,
+						concat('TAS0612_101_',split_part("SiteNumber",'_',2))::text AS siteid,
+                        --substring(trim("Subject"),0,8)::text AS usubjid,
+                        "Subject"::text AS usubjid,
                         null::integer AS cmseq,
                         coalesce(nullif("CMTRT",''),'Missing')::text AS cmtrt,
                         "CMINDC"::text AS cmmodify,

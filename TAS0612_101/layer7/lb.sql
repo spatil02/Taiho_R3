@@ -7,7 +7,8 @@ WITH included_subjects AS (
                 SELECT DISTINCT studyid, siteid, usubjid FROM subject ),
 				
 	normlab as(SELECT lb1."project"::text AS studyid,
-                        lb1."SiteNumber"::text AS siteid, 
+                        --lb1."SiteNumber"::text AS siteid, 
+						concat('TAS0612_101_',split_part(lb1."SiteNumber",'_',2))::text AS siteid,
 				 	    lb1."Subject"::text    AS usubjid,
                         /*REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(lb1."InstanceName",'<WK[0-9]D[0-9]/>\sEscalation',''),'<WK[0-9]D[0-9][0-9]/>\sEscalation',''),'Escalation',''):: text as visit,*/
 						lb1."FolderName":: text as visit,

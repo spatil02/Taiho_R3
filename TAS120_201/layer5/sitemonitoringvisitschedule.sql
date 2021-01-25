@@ -10,9 +10,11 @@ WITH included_sites AS (
                SELECT  'TAS120_201'::text AS studyid,
                         concat('TAS120_201_',site_id)::text AS siteid,
 						 "site_status"::text  as visitname,
-						 case when "siv_plannned_date"='NULL' then Null else "siv_plannned_date" end ::date AS plannedvisitdate,
+						 --case when "siv_plannned_date"='NULL' then Null else "siv_plannned_date" end ::date AS plannedvisitdate,
+						 "siv_plannned_date" ::date AS plannedvisitdate,
 						 "siv_actual_or_planned"::text as smvvtype
-				 from tas120_201_ctms.site_closeout)
+				 from tas120_201_ctms.site_closeout
+				 where "siv_plannned_date" <> 'NULL')
 
 SELECT 
         /*KEY (smvs.studyid || '~' || smvs.siteid)::text AS comprehendid, KEY*/

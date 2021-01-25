@@ -10,7 +10,8 @@ WITH included_subjects AS (
     ex_data AS (             
              SELECT
                 ex."project"::	text AS studyid,
-                ex."SiteNumber":: text AS siteid,
+                --ex."SiteNumber":: text AS siteid,
+				concat('TAS0612_101_',split_part(ex."SiteNumber",'_',2))::text AS siteid,
                 ex."Subject":: text AS usubjid,
                 row_number() over (partition by ex."studyid", ex."siteid", ex."Subject" ORDER BY ex."EXOSTDAT")::int AS exseq,
               /*REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE("InstanceName",'<WK[0-9]D[0-9]/>\sEscalation',''),'<WK[0-9]D[0-9][0-9]/>\sEscalation',''),'Escalation',''):: text as visit,*/

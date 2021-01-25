@@ -5,16 +5,16 @@ Notes: Standard mapping to CCDM Study table
 
 
 WITH study_data AS (
-                    SELECT  'TAS0612_101'::text AS studyid,
+                     SELECT  'TAS0612_101'::text AS studyid,
                             'TAS0612_101'::text AS studyname,
-                            null::text AS studydescription,
-                            null::text AS studystatus,
-                            null::text AS studyphASe,
-                            null::text AS studysponsor,
-                            null::text AS therapeuticarea,
+                            'A Phase 1 Study of TAS0612 in Patients with Locally Advanced or Metastatic Solid Tumors'::text AS studydescription,
+                            'Active'::text AS studystatus,
+                            'Phase 1'::text AS studyphASe,
+                            'Taiho Oncology'::text AS studysponsor,
+                            'Oncology'::text AS therapeuticarea,
                             null::text AS program,
-                            ''::text AS medicalindication,
-                            null::date AS studystartdate,
+                            'Solid Tumor'::text AS medicalindication,
+                            '29-June-2020'::date AS studystartdate,
                             null::date AS studycompletiondate,
                             null::date AS studystatusdate,
                             null::boolean AS isarchived )

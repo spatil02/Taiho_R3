@@ -8,7 +8,8 @@ WITH included_subjects AS (
 
      pe_data AS (
                  SELECT "project"::text AS studyid,
-                        "SiteNumber"::text AS siteid,
+                        --"SiteNumber"::text AS siteid,
+						concat('TAS0612_101_',split_part("SiteNumber",'_',2))::text AS siteid,
                         "Subject"::text AS usubjid,
                         row_number() OVER (PARTITION BY "studyid", "siteid", "Subject" ORDER BY "serial_id")::int AS peseq,
                         'PE'::text AS petestcd,

@@ -8,7 +8,8 @@ WITH included_subjects AS (
 
      sv_data AS (
                 SELECT  "project"::text AS studyid,
-                        "SiteNumber"::text AS siteid,
+                        --"SiteNumber"::text AS siteid,
+						concat('TAS0612_101_',split_part("SiteNumber",'_',2))::text AS siteid,
                         "Subject"::text AS usubjid, 
                         "FolderSeq"::numeric AS visitnum,
                         "FolderName"::text AS visit,
@@ -19,7 +20,8 @@ WITH included_subjects AS (
 						group by 1,2,3,4,5,6),
 	
 	formdata_visits AS (SELECT DISTINCT fd.studyid,
-                                    fd.siteid,
+                                    --fd.siteid,
+                                    concat('TAS0612_101_',split_part(fd.siteid,'_',2))::text AS siteid,
                                     fd.usubjid,
                                     99::numeric AS visitnum, -- will be updated by cleanup script
                                     fd.visit,

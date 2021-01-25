@@ -11,7 +11,8 @@ ds_data AS (
 ----Disposition Event: All Subjects----
 
 SELECT  dm."project"::text AS studyid,
-dm."SiteNumber"::text AS siteid,
+--dm."SiteNumber"::text AS siteid,
+concat('TAS0612_101_',split_part(dm."SiteNumber",'_',2))::text AS siteid,
 dm."Subject"::text AS usubjid,
 1.0::NUMERIC AS dsseq, 
 'All Subjects'::text AS dscat,
@@ -25,7 +26,8 @@ union all
 --Disposition Event: Consented
 
 SELECT  dm."project"::text AS studyid,
-dm."SiteNumber"::text AS siteid,
+--dm."SiteNumber"::text AS siteid,
+concat('TAS0612_101_',split_part(dm."SiteNumber",'_',2))::text AS siteid,
 dm."Subject"::text AS usubjid,
 2.0::NUMERIC AS dsseq, 
 'Consent'::text AS dscat,
@@ -39,7 +41,8 @@ union all
 --Disposition Event: Failed Screen
 
 SELECT  ie."project"::text AS studyid,
-ie."SiteNumber"::text AS siteid,
+--ie."SiteNumber"::text AS siteid,
+concat('TAS0612_101_',split_part(ie."SiteNumber",'_',2))::text AS siteid,
 ie."Subject"::text AS usubjid,
 2.1::NUMERIC AS dsseq, 
 'Enrollment'::text AS dscat,
@@ -58,7 +61,8 @@ union all
 --Disposition Event: Enrollment
 
 SELECT  ie."project"::text AS studyid,
-ie."SiteNumber"::text AS siteid,
+--ie."SiteNumber"::text AS siteid,
+concat('TAS0612_101_',split_part(ie."SiteNumber",'_',2))::text AS siteid,
 ie."Subject"::text AS usubjid,
 3.0::NUMERIC AS dsseq,
 'Enrollment'::text AS dscat,
@@ -73,7 +77,8 @@ union all
 --Disposition Event: Early EOT
 
 SELECT  eot."project"::text AS studyid,
-eot."SiteNumber"::text AS siteid,
+--eot."SiteNumber"::text AS siteid,
+concat('TAS0612_101_',split_part(eot."SiteNumber",'_',2))::text AS siteid,
 eot."Subject"::text AS usubjid,
 4.01::NUMERIC AS dsseq, 
 'Treatment'::text AS dscat,
@@ -87,7 +92,8 @@ union all
 --Disposition Event: Withdrawn
 
 SELECT  es."project"::text AS studyid,
-es."SiteNumber"::text AS siteid,
+--es."SiteNumber"::text AS siteid,
+concat('TAS0612_101_',split_part(es."SiteNumber",'_',2))::text AS siteid,
 es."Subject"::text AS usubjid,
 4.1::NUMERIC AS dsseq, 
 'Completion'::text AS dscat,
@@ -103,7 +109,8 @@ union all
 --Disposition Event: Study Completion
 
 SELECT  es."project"::text AS studyid,
-es."SiteNumber"::text AS siteid,
+--es."SiteNumber"::text AS siteid,
+concat('TAS0612_101_',split_part(es."SiteNumber",'_',2))::text AS siteid,
 es."Subject"::text AS usubjid,
 5.0::NUMERIC AS dsseq, 
 'Completion'::text AS dscat,

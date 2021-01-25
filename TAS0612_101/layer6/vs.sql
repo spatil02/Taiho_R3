@@ -29,7 +29,8 @@ WITH included_subjects AS (
                      vstm
                      from
 (SELECT  vs."project"::text AS studyid,
-                    vs."SiteNumber"::text AS siteid, 
+                    --vs."SiteNumber"::text AS siteid, 
+					concat('TAS0612_101_',split_part(vs."SiteNumber",'_',2))::text AS siteid,
 				 	vs."Subject"::text    AS usubjid,
 					Null::int AS vsseq,
                     vstestcd::text AS vstestcd,

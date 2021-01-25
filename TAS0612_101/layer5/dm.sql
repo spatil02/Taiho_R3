@@ -9,7 +9,8 @@ WITH included_subjects AS (
      dm_data AS (
 				
                 SELECT  dm."project"::text AS studyid,
-                        dm."SiteNumber"::text AS siteid,
+                        --dm."SiteNumber"::text AS siteid,
+						concat('TAS0612_101_',split_part("SiteNumber",'_',2))::text AS siteid,
                         dm."Subject"::text AS usubjid,
                         dm."FolderSeq"::numeric AS visitnum,
                         dm."FolderName"::text AS visit,

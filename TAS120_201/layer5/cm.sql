@@ -24,10 +24,10 @@ WITH included_subjects AS (
 				NULL::text	AS	cmdosfrq	,
 				NULL::text 	AS	cmdostot	,
 				CASE WHEN "CMROUTE"='Other' then  "CMROUTE" || "CMROUTEOTH"   ELSE  "CMROUTE"::text END	AS	cmroute	,
-				case when cmstdtc='' then null
+				case when cmstdtc='' or cmstdtc like '%0000%' then null
 							else to_date(cmstdtc,'DD Mon YYYY') 
 						end ::timestamp without time zone AS cmstdtc,
-						case when cmendtc='' then null
+						case when cmendtc='' or cmstdtc like '%0000%'then null
 							else to_date(cmendtc,'DD Mon YYYY') 
 						end ::timestamp without time zone AS cmendtc,
 				NULL::time without time zone	AS	cmsttm	,

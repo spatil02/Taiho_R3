@@ -8,12 +8,13 @@ WITH included_studies AS (
                 
 /* Subject_count AS (
                 SELECT count(*) as sub_cnt FROM tas3681_101_ctms.subjects 
-                where subject_status in ('Completed','Screening')),
+                where subject_status in ('Completed','Screening')),*/
                 
  site_count AS (
-                SELECT count(*) as site_cnt FROM tas3681_101_ctms.site_visits 
-                where visit_status in ('Completed','Projected','Scheduled')),
-screen_count AS (
+                SELECT count(*) as site_cnt FROM tas120_201_ctms.site_startup_metrics
+                where trim(site_status_icon) = 'Ongoing'),
+				
+/*screen_count AS (
 				select count(*) as screen_cnt FROM tas3681_101_ctms.subject_visits 
 				where visit_reference = 'SCR'),*/
 
@@ -33,8 +34,8 @@ screen_count AS (
                         'Monthly'::text AS frequency,
                         max("siv_date_planned")::date AS enddate,
                         'Planned'::text AS type,
-                        '1' ::int AS recruitmentcount
-            From tas120_201_ctms.milestone_status_site--, site_count sc
+                        sc.site_cnt ::int AS recruitmentcount
+            From tas120_201_ctms.milestone_status_site, site_count sc
 			where "siv_date_planned" not in ('NULL','N/A')
              group by 1,2,3,5,6
 			 union all

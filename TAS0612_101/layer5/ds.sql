@@ -2,9 +2,18 @@
 CCDM DS mapping
 Notes: Standard mapping to CCDM DS table
 */
-
+select * from (
 WITH included_subjects AS (
                 SELECT DISTINCT studyid, siteid, usubjid FROM subject ),
+                
+ max_eot as (
+ select eot."project",
+ concat('TAS0612_101_',split_part(eot."SiteNumber",'_',2)) as siteid,
+eot."Subject",
+max(eot."EOTDAT") as eotdat
+from tas0612_101."EOT" eot
+group by 1,2,3
+ ),
 
 ds_data AS (
 
@@ -86,6 +95,7 @@ eot."Subject"::text AS usubjid,
 eot."EOTDAT"::DATE AS dsstdtc,
 eot."EOTREAS"::text AS dsscat  
 from tas0612_101."EOT" eot
+where eot."EOTDAT" in (select EOTDAT from max_eot )
 
 union all 
 
@@ -99,7 +109,7 @@ es."Subject"::text AS usubjid,
 'Completion'::text AS dscat,
 'Withdrawn'::text AS dsterm,
 es."EOSDAT"::DATE AS dsstdtc,
-null::text AS dsscat  
+es."EOSREAS"::text AS dsscat  
 from tas0612_101."EOS" es
 where es."EOSREAS" <> 'Study Completion'
 
@@ -133,7 +143,9 @@ SELECT
         ds.dsscat::text AS dsscat,
         ds.dsterm::text AS dsterm,
         ds.dsstdtc::DATE AS dsstdtc
-       /*KEY  , (ds.studyid || '~' || ds.siteid || '~' || ds.usubjid || '~' || ds.dsseq)::text  AS objectuniquekey KEY*/
+        , (ds.studyid || '~' || ds.siteid || '~' || ds.usubjid || '~' || ds.dsseq)::text  AS objectuniquekey 
         /*KEY , now()::TIMESTAMP WITH TIME ZONE AS comprehend_update_time KEY*/
 FROM ds_data ds
-JOIN included_subjects s ON (ds.studyid = s.studyid AND ds.siteid = s.siteid AND ds.usubjid = s.usubjid);
+JOIN included_subjects s ON (ds.studyid = s.studyid AND ds.siteid = s.siteid AND ds.usubjid = s.usubjid)
+)a
+where objectuniquekey = 'TAS0612_101~TAS0612_101_101~101-001-P1~4.01';

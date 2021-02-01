@@ -27,14 +27,18 @@ WITH included_subjects AS (
 				case when cmstdtc='' or cmstdtc like '%0000%' then null
 							else to_date(cmstdtc,'DD Mon YYYY') 
 						end ::timestamp without time zone AS cmstdtc,
-						case when cmendtc='' or cmstdtc like '%0000%'then null
+						case when cmendtc='' or cmendtc like '%0000%' then null
 							else to_date(cmendtc,'DD Mon YYYY') 
 						end ::timestamp without time zone AS cmendtc,
 				NULL::time without time zone	AS	cmsttm	,
 				NULL::time without time zone	AS	cmentm
 				FROM  
-( select *,concat(replace(substring(upper("CMSTDAT_RAW"),1,2),'UN','01'),replace(substring(upper("CMSTDAT_RAW"),3),'UNK','Jan')) AS cmstdtc,
-	     concat(replace(substring(upper("CMENDAT_RAW"),1,2),'UN','01'),replace(substring(upper("CMENDAT_RAW"),3),'UNK','Jan')) AS cmendtc
+( select *,case when length("CMSTDAT_RAW")<>11 then null
+else concat(replace(substring(upper("CMSTDAT_RAW"),1,2),'UN','01'),replace(substring(upper("CMSTDAT_RAW"),3),'UNK','Jan'))
+end as cmstdtc,
+case when length("CMENDAT_RAW")<>11 then null
+else concat(replace(substring(upper("CMENDAT_RAW"),1,2),'UN','01'),replace(substring(upper("CMENDAT_RAW"),3),'UNK','Jan'))
+end as cmendtc
 from tas120_201."CM"	
 )cm  )
 

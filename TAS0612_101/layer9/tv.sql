@@ -59,7 +59,7 @@ SELECT
 	tv.visitdy::int AS visitdy,
 	tv.visitwindowbefore::int AS visitwindowbefore,
 	tv.visitwindowafter::int AS visitwindowafter
-	 , (tv.studyid || '~' || tv.visit)::text  AS objectuniquekey 
+	/*KEY, (tv.studyid || '~' || tv.visit)::text  AS objectuniquekey KEY*/
 	/*KEY , now()::timestamp without time zone AS comprehend_update_time KEY*/
 FROM tv_data tv
 JOIN included_studies st ON (st.studyid = tv.studyid);

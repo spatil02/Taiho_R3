@@ -56,8 +56,12 @@ WITH included_subjects AS (
                         null::time without time zone AS cmsttm,
                         null::time without time zone AS cmentm
                 FROM 
-( select *,concat(replace(substring(upper("CMSTDAT_RAW"),1,2),'UN','01'),replace(substring(upper("CMSTDAT_RAW"),3),'UNK','Jan')) AS cmstdtc,
-	     concat(replace(substring(upper("CMENDAT_RAW"),1,2),'UN','01'),replace(substring(upper("CMENDAT_RAW"),3),'UNK','Jan')) AS cmendtc
+( select *,case when length("CMSTDAT_RAW")<>11 then null
+else concat(replace(substring(upper("CMSTDAT_RAW"),1,2),'UN','01'),replace(substring(upper("CMSTDAT_RAW"),3),'UNK','Jan'))
+end as cmstdtc,
+case when length("CMENDAT_RAW")<>11 then null
+else concat(replace(substring(upper("CMENDAT_RAW"),1,2),'UN','01'),replace(substring(upper("CMENDAT_RAW"),3),'UNK','Jan'))
+end as cmendtc
 from tas0612_101."CM"	
 )cm )cm
      )

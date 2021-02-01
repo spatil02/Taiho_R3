@@ -89,7 +89,7 @@ eos."SiteNumber"::TEXT AS siteid,
 eos."Subject"::TEXT AS usubjid,
 4.1::NUMERIC AS dsseq, --deprecated
 'Completion'::TEXT AS dscat,
-null::TEXT AS dsscat,
+eos."EOS_RSN"::TEXT AS dsscat,
 'Withdrawn'::TEXT AS dsterm,
 eos."EOS_DAT"::DATE AS dsstdtc
 from tas120_201."EOS" eos

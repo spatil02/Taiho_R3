@@ -52,11 +52,11 @@ SELECT
 NULL::text AS aesev ,
 case when lower("AESER")='yes' then 'Serious'
      when lower("AESER")='no' then 'Non-Serious'
-     else 'unknown' end::text AS aeser,
+     else 'Unknown' end::text AS aeser,
 CASE
     WHEN "AEREL" IN ('possibly related','definitely related','probably related','Related') THEN 'Yes'
     WHEN "AEREL" IN('unrelated','Not Reasonably Possible','Not Related') THEN 'No'
-    ELSE '' END::text as aerelnst,
+    ELSE 'Unknown' END::text as aerelnst,
 "RecordPosition"::int AS aeseq ,
 "AESTDAT"::timestamp without time zone AS aesttm ,
 "AEENDAT"::timestamp without time zone AS aeentm ,
@@ -90,7 +90,7 @@ case when lower("AESER")='yes' then 'Serious'
      else 'Unknown' end::text AS aeser,
 CASE WHEN "AEREL" IN ('possibly related','definitely related','probably related','Related') THEN 'Yes'
      WHEN "AEREL" IN('unrelated','Not Reasonably Possible','Not Related') THEN 'No'
-    ELSE '' END::text as aerelnst,
+    ELSE 'Unknown' END::text as aerelnst,
 "RecordPosition"::int AS aeseq,
 "AESTDAT"::timestamp without time zone AS aesttm,
 "AEENDAT"::timestamp without time zone AS aeentm,

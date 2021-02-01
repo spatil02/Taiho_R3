@@ -5,17 +5,28 @@ Notes: Standard mapping to CCDM StudyMilestone table
 
 WITH included_studies AS (
                 SELECT studyid FROM study ),
-
+	
      studymilestone_data AS (
+     select sm.studyid,
+     row_number() over(partition by studyid order by expecteddate) as milestoneseq,
+     sm.milestonelabel,
+     milestonetype,
+     sm.expecteddate,
+     ismandatory,
+     iscriticalpath
+     from
+     (
                 SELECT  'TAS120_201'::text AS studyid,
-                        '1'::int AS milestoneseq,
-                        sm."trial_name"::text AS milestonelabel,
+                        null::int AS milestoneseq,
+                        sm."milestones"::text AS milestonelabel,
                         'Planned'::text AS milestonetype,
-                        sm."1st_subject_1st_visit_planned"::date AS expecteddate,
+                        nullif(sm."planned_date",'')::date AS expecteddate,
                         'yes'::boolean AS ismandatory,
                         'yes'::boolean AS iscriticalpath
-                        from tas120_201_ctms.milestone_status_study sm                        
-				
+                        from tas120_201_study_milestone.study_milestone sm
+                       
+                        )sm  where expecteddate is not null
+                       
                         )
 
 SELECT 

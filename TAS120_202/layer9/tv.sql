@@ -10,14 +10,14 @@ WITH included_studies AS (
 tv_scheduled AS (
 
 	SELECT visit_number     as      visitnum, visit, visitdy , window_before_visit_day as "visitwindowbefore", window_after_visit_day as "visitwindowafter"
-            FROM tv_internal.tv_tracker_list where studyid='TAS120-201'
+            FROM tv_internal.tv_tracker_list where studyid='TAS120-202'
 	
 ),
 
 tv_data AS (
 	SELECT
-		'TAS120_201'::text AS studyid,
-		coalesce(visitnum,'99')::numeric AS visitnum,
+		'TAS120_202'::text AS studyid,
+		visitnum::numeric AS visitnum,
 		visit::text AS visit,
 		visitdy::int AS visitdy,
 		visitwindowbefore::int AS visitwindowbefore,

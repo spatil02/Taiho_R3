@@ -7,13 +7,14 @@ WITH included_studies AS (
                 SELECT studyid FROM study ),
 
      studyplannedstatistic_data AS (
-                SELECT  'TAS0612_101'::text AS studyid,
+                SELECT  'TAS3681_101'::text AS studyid,
                         'SITE_ACTIVATION'::text AS statcat,
                         'Count'::text AS statsubcat,
-                        count(site_status_icon)::int AS statval,
+                        count(visit_status)::int AS statval,
                         'Count'::text AS statunit
-                        from tas0612_101_ctms.site_startup_metrics
-						where trim(site_status_icon) = 'Ongoing'
+					from
+						tas3681_101_ctms.site_visits
+						where visit_status in ('Completed','Projected','Scheduled')
 						)
 
 SELECT 

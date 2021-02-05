@@ -3,21 +3,22 @@ CCDM Study mapping
 Notes: Standard mapping to CCDM Study table
 */
 
+
 WITH study_data AS (
-							SELECT  'TAS120_201'::text AS studyid,
-                            'TAS120_201'::text AS studyname,
-                            'A Phase 2 Study of TAS-120 in Metastatic Breast Cancers Harboring Fibroblast Growth Factor Receptor (FGFR) Amplifications'::text AS studydescription,
+                    SELECT  'TAS3681_101'::text AS studyid,
+                            'TAS3681_101'::text AS studyname,
+                            'A Phase 1, Open-Label, Non-Randomized, Safety, Tolerability, and
+Pharmacokinetic Study of TAS3681 in Patients with Metastatic Castration-Resistant Prostate Cancer'::text AS studydescription,
                             'Active'::text AS studystatus,
-                            'Phase 2'::text AS studyphASe,
+                            'Phase 1'::text AS studyphASe,
                             'Taiho'::text AS studysponsor,
                             'Oncology'::text AS therapeuticarea,
                             null::text AS program,
-                            'Metastatic Breast Cancers Harboring Fibroblast Growth Factor Receptor (FGFR) Amplifications'::text AS medicalindication,
-                            null::date AS studystartdate,
-                            null::date AS studycompletiondate,
+                            'Metastatic Castration-Resistant Prostate Cancer'::text AS medicalindication,
+                            '13-Aug-2015'::date AS studystartdate,
+                            '17-Jan-2023'::date AS studycompletiondate,
                             null::date AS studystatusdate,
-                            null::boolean AS isarchived
-					)
+                            null::boolean AS isarchived )
 
 SELECT 
         /*KEY s.studyid::text AS comprehendid, KEY*/

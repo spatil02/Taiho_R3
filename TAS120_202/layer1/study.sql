@@ -4,20 +4,19 @@ Notes: Standard mapping to CCDM Study table
 */
 
 WITH study_data AS (
-							SELECT  'TAS120_201'::text AS studyid,
-                            'TAS120_201'::text AS studyname,
-                            'A Phase 2 Study of TAS-120 in Metastatic Breast Cancers Harboring Fibroblast Growth Factor Receptor (FGFR) Amplifications'::text AS studydescription,
+                    SELECT  'TAS120_202'::text AS studyid,
+                            'TAS120_202'::text AS studyname,
+                            'A PHASE 2 STUDY OF FUTIBATINIB IN PATIENTS WITH SPECIFIC FGFR ABERRATIONS'::text AS studydescription,
                             'Active'::text AS studystatus,
                             'Phase 2'::text AS studyphASe,
                             'Taiho'::text AS studysponsor,
                             'Oncology'::text AS therapeuticarea,
                             null::text AS program,
-                            'Metastatic Breast Cancers Harboring Fibroblast Growth Factor Receptor (FGFR) Amplifications'::text AS medicalindication,
+                            ''::text AS medicalindication,
                             null::date AS studystartdate,
                             null::date AS studycompletiondate,
                             null::date AS studystatusdate,
-                            null::boolean AS isarchived
-					)
+                            null::boolean AS isarchived )
 
 SELECT 
         /*KEY s.studyid::text AS comprehendid, KEY*/

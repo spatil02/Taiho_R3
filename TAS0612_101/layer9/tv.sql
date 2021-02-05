@@ -15,6 +15,7 @@ tv_scheduled AS (
 ),
 
 tv_data AS (
+select studyid,visitnum,visit,visitdy,visitwindowafter,visitwindowbefore from (
 	SELECT
 		'TAS0612_101'::text AS studyid,
 		visitnum::numeric AS visitnum,
@@ -24,19 +25,20 @@ tv_data AS (
 		visitwindowafter::int AS visitwindowafter
 	FROM tv_scheduled tvs
 
-	UNION ALL
+	UNION 
 
 	SELECT
 		DISTINCT sv.studyid::text AS studyid,
-		coalesce(sv."visitnum", 99)::numeric AS visitnum,
+		99::numeric AS visitnum,
 		sv."visit"::text AS visit,
 		99999::int AS visitdy,
 		0::int AS visitwindowbefore,
 		0::int AS visitwindowafter
 	FROM sv 
 	WHERE (studyid, visit) NOT IN (SELECT DISTINCT studyid, visit FROM tv_scheduled)
+	--and studyid = 'TAS0612_101'
 
-	UNION ALL
+	UNION 
 	SELECT 
 		DISTINCT studyid::text AS studyid,
 		'99'::numeric AS visitnum,
@@ -45,9 +47,10 @@ tv_data AS (
 		0::int AS visitwindowbefore,
 		0::int AS visitwindowafter
 	FROM formdata 
-	WHERE (studyid, visit) NOT IN (SELECT DISTINCT studyid, visit FROM sv) 
-	AND (studyid, visit) NOT IN (SELECT studyid, visit FROM tv_scheduled)
-  
+	WHERE (studyid, visit) NOT IN (SELECT DISTINCT studyid, visit FROM sv ) 
+	AND (studyid, visit) NOT IN (select distinct studyid, visit FROM tv_scheduled)
+	--and studyid = 'TAS0612_101'
+  )a --where (visit <> 'Day 1 of Cycle' and visitnum <> 99)
 	
 )
 

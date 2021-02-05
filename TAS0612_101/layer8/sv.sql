@@ -33,6 +33,14 @@ WITH included_subjects AS (
                         ),
 						
 	all_visits AS (
+	SELECT  v.studyid,
+                                v.siteid,
+                                v.usubjid,
+                                v.visitnum,
+                                v.visit,
+                                min(v.svstdtc) as svstdtc,
+                                max(v.svendtc) as svendtc
+                        from   (
                         SELECT studyid,
                                 siteid,
                                 usubjid,
@@ -47,9 +55,10 @@ WITH included_subjects AS (
                                 usubjid,
                                 visitnum,
                                 visit,
-                                min(svstdtc) as svstdtc,
-                                max(svendtc) as svendtc
+                                svstdtc ,
+                                svendtc
                         FROM formdata_visits
+						) v
                         group by studyid, siteid, usubjid, visitnum,visit
                         )
 						

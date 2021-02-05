@@ -6,46 +6,44 @@ Notes: Standard mapping to CCDM studyplannedrecruitment table
 WITH included_studies AS (
                 SELECT studyid FROM study ),
                 
-/* Subject_count AS (
-                SELECT count(*) as sub_cnt FROM tas3681_101_ctms.subjects 
-                where subject_status in ('Completed','Screening')),*/
+
                 
  site_count AS (
-                SELECT count(*) as site_cnt FROM tas0612_101_ctms.site_startup_metrics
+                SELECT case when "siv"='NULL' then null else "siv" end as siv_date FROM tas0612_101_ctms.site_startup_metrics
                 where trim(site_status_icon) = 'Ongoing'),
 				
-/*screen_count AS (
-				select count(*) as screen_cnt FROM tas3681_101_ctms.subject_visits 
-				where visit_reference = 'SCR'),*/
+
 
 
      studyplannedrecruitment_data AS (
-                SELECT  'TAS0612_101'::text AS studyid,
+                 SELECT  'TAS0612_101'::text AS studyid,
                         'Enrollment'::text AS category,
                         'Monthly'::text AS frequency,
-                       max(nullif("last_subject_1st_visit_planned",''))::date AS enddate,
+                       max(COALESCE("MinCreated" ,"RecordDate"))::date AS enddate,
                         'Planned'::text AS type,
-                        '1' ::int AS recruitmentcount
-               From tas0612_101_ctms.milestone_status_study--,  Subject_count sc
-               group by 1,2,3,5,6
+                        count("IEYN") ::int AS recruitmentcount
+               From tas0612_101."IE"--, 
+			   where "IEYN" = 'Yes' 
+               
                union all
                    SELECT  'TAS0612_101'::text AS studyid,
                         'Site Activation'::text AS category,
                         'Monthly'::text AS frequency,
-                        max(nullif("siv",'NULL'))::date AS enddate,
+                        
+                        max(sc."siv_date")::date AS enddate,
                         'Planned'::text AS type,
-                        sc.site_cnt ::int AS recruitmentcount
-            From tas0612_101_ctms.site_startup_metrics, site_count sc
-             group by 1,2,3,5,6
+                        count("site_status_icon")::int AS recruitmentcount
+            From tas0612_101_ctms.site_startup_metrics,site_count sc
+             where trim("site_status_icon") = 'Ongoing'
              union all
-                   SELECT  'TAS0612_101'::text AS studyid,
-                        'Screening'::text AS category,
+                    SELECT  'TAS0612_101'::text AS studyid,
+                        'SUBJECT SCREENED'::text AS category,
                         'Monthly'::text AS frequency,
-                        max("1st_subject_1st_visit_planned")::date AS enddate,
+                        max("DMICDAT")::date AS enddate,
                         'Planned'::text AS type,
-                        '1' ::int AS recruitmentcount
-            From tas0612_101_ctms.milestone_status_study--, screen_count sc
-             group by 1,2,3,5,6
+                        count("Folder") ::int AS recruitmentcount
+            From tas0612_101."DM"
+            where "Folder" = 'SCRN'
                 )
 
 SELECT

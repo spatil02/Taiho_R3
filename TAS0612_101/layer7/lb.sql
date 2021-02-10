@@ -10,8 +10,7 @@ WITH included_subjects AS (
                         --lb1."SiteNumber"::text AS siteid, 
 						concat('TAS0612_101_',split_part(lb1."SiteNumber",'_',2))::text AS siteid,
 				 	    lb1."Subject"::text    AS usubjid,
-                        /*REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(lb1."InstanceName",'<WK[0-9]D[0-9]/>\sEscalation',''),'<WK[0-9]D[0-9][0-9]/>\sEscalation',''),'Escalation',''):: text as visit,*/
-						lb1."FolderName":: text as visit,
+                        REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(lb1."InstanceName",'<WK[0-9]D[0-9]/>\sEscalation',''),'<WK[0-9]D[0-9][0-9]/>\sEscalation',''),'Escalation',''):: text as visit,
 						CASE
 							WHEN lb1."DataPageName" like '%Chemistry%' THEN max(chem."LBDAT")
 							WHEN lb1."DataPageName" like '%Hematology%' THEN max(hem."LBDAT")

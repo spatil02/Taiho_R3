@@ -12,8 +12,8 @@ WITH study_data AS (
                             'Taiho'::text AS studysponsor,
                             'Oncology'::text AS therapeuticarea,
                             null::text AS program,
-                            ''::text AS medicalindication,
-                            null::date AS studystartdate,
+                            'Futibatinib in Patients With Specific FGFR Aberrations'::text AS medicalindication,
+                            '30-Jun-2020'::date AS studystartdate,
                             null::date AS studycompletiondate,
                             null::date AS studystatusdate,
                             null::boolean AS isarchived )

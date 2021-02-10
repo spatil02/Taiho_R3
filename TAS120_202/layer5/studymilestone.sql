@@ -9,7 +9,11 @@ WITH included_studies AS (
      studymilestone_data AS (
      select sm.studyid,
      row_number() over(partition by studyid order by expecteddate) as milestoneseq,
-     sm.milestonelabel,
+     case when sm.milestonelabel = 'First Subject Enrolled' then 'FIRST SUBJECT IN'
+     when sm.milestonelabel = 'Last Subject Enrolled' then 'LAST SUBJECT IN'
+     when sm.milestonelabel = 'First Site Activated' then 'FIRST SITE READY TO ENROLL' 
+	when sm.milestonelabel = 'Last Site Activated' then 'ALL SITES ACTIVATED'	 
+     else sm.milestonelabel end as milestonelabel,
      milestonetype,
      sm.expecteddate,
      ismandatory,
@@ -23,10 +27,8 @@ WITH included_studies AS (
                         nullif(sm."planned_date",'')::date AS expecteddate,
                         'yes'::boolean AS ismandatory,
                         'yes'::boolean AS iscriticalpath
-                        from tas120_202_ctms.milestone sm
-                       
-                        )sm  where expecteddate is not null
-                       
+                        from tas120_202_ctms.milestone sm                       
+                        )sm  where expecteddate is not null                       
                         )
 
 SELECT 

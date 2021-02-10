@@ -18,9 +18,8 @@ WITH included_sites AS (
 						extract(day from "siv_visit_end_date"::timestamp  - "siv_visit_start_date"::timestamp ) ::text AS smvtrvld,
 						'days':: text AS smvtrvlu,
 						"siv_actual_or_planned" ::text AS smvvtype
-						
                           	from tas120_201_ctms.site_closeout
-								 
+								 where "site_status" not in ('Site Ready to Enroll','IRB/IEC Approval')
 							)
 
 SELECT 

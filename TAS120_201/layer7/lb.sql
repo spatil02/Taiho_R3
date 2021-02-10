@@ -86,9 +86,9 @@ from (
                         null::numeric AS  lbuloq,
                         null::text AS  lbclsig
 		From        tas120_201_lab."NormLab" lb1
-			LEFT JOIN tas120_201."CHEM" chem on (lb1."project" = chem."project" AND lb1."SiteNumber"= chem."SiteNumber" AND lb1."Subject" = chem."Subject" AND lb1."FolderName" = chem."FolderName")
-			LEFT JOIN tas120_201."COAG" coag on (lb1."project" = coag."project" AND lb1."SiteNumber" = coag."SiteNumber" AND lb1."Subject" = coag."Subject" AND lb1."FolderName" = coag."FolderName")
-			LEFT JOIN tas120_201."HEMA" hem on (lb1."project" = hem."project" AND lb1."SiteNumber" = hem."SiteNumber" AND lb1."Subject" = hem."Subject" AND lb1."FolderName" = hem."FolderName")
+			LEFT JOIN tas120_201."CHEM" chem on (lb1."project" = chem."project" AND lb1."SiteNumber"= chem."SiteNumber" AND lb1."Subject" = chem."Subject" AND lb1."InstanceName" = chem."InstanceName")
+			LEFT JOIN tas120_201."COAG" coag on (lb1."project" = coag."project" AND lb1."SiteNumber" = coag."SiteNumber" AND lb1."Subject" = coag."Subject" AND lb1."InstanceName" = coag."InstanceName")
+			LEFT JOIN tas120_201."HEMA" hem on (lb1."project" = hem."project" AND lb1."SiteNumber" = hem."SiteNumber" AND lb1."Subject" = hem."Subject" AND lb1."InstanceName" = hem."InstanceName")
 			 group by 1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36
 		--	)a
 			

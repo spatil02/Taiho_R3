@@ -9,11 +9,11 @@ WITH study_data AS (
                             'A Phase 2 Study of TAS-120 in Metastatic Breast Cancers Harboring Fibroblast Growth Factor Receptor (FGFR) Amplifications'::text AS studydescription,
                             'Active'::text AS studystatus,
                             'Phase 2'::text AS studyphASe,
-                            'Taiho'::text AS studysponsor,
+                            'Taiho Oncology'::text AS studysponsor,
                             'Oncology'::text AS therapeuticarea,
                             null::text AS program,
                             'Metastatic Breast Cancers Harboring Fibroblast Growth Factor Receptor (FGFR) Amplifications'::text AS medicalindication,
-                            null::date AS studystartdate,
+                            '15-Dec-2019'::date AS studystartdate,
                             null::date AS studycompletiondate,
                             null::date AS studystatusdate,
                             null::boolean AS isarchived

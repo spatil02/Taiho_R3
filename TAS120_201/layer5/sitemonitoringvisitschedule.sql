@@ -14,7 +14,7 @@ WITH included_sites AS (
 						 "siv_plannned_date" ::date AS plannedvisitdate,
 						 "siv_actual_or_planned"::text as smvvtype
 				 from tas120_201_ctms.site_closeout
-				 where "siv_plannned_date" <> 'NULL')
+				 where "siv_plannned_date" <> 'NULL' and  "site_status" not in ('Site Ready to Enroll','IRB/IEC Approval'))
 
 SELECT 
         /*KEY (smvs.studyid || '~' || smvs.siteid)::text AS comprehendid, KEY*/

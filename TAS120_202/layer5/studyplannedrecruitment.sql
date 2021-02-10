@@ -13,7 +13,7 @@ WITH included_studies AS (
                        max("ENRDAT")::date AS enddate,
                         'Planned'::text AS type,
                         count("ENRYN") ::int AS recruitmentcount
-              From tas120_202."ENR"--,  Subject_count sc
+              From tas120_202."ENR"
 			   where "ENRYN" = 'Yes'
                
                union all
@@ -32,9 +32,9 @@ WITH included_studies AS (
                         'Monthly'::text AS frequency,
                         max(COALESCE("MinCreated" ,"RecordDate"))::date AS enddate,
                         'Planned'::text AS type,
-                        count("IEYN") ::int AS recruitmentcount
-                     From tas120_202."IE"
-            where trim("IEYN")='Yes'
+                        count("Folder") ::int AS recruitmentcount
+         From tas120_202."DM"
+         where "Folder" = 'SCRN'			
                 )
 
 SELECT

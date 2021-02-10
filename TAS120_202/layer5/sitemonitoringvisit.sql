@@ -7,21 +7,32 @@ WITH included_sites AS (
                 SELECT DISTINCT studyid, siteid FROM site ),
  
      sitemonitoringvisit_data AS (
-                SELECT  'TAS120_201'::text AS studyid,
-                        concat('TAS120_201_',site_id)::text AS siteid,
-						/*"visit_name"||'_'||row_number() over (partition by "site_#","visit_name"
-						order by convert_to_date(VISIT_START::text))::text  as visitname,*/
-						"site_status"::text AS visitname,
-						"siv_date"::date AS visitdate,
+     select studyid,
+			siteid,
+			 visitname||'~' || row_number() OVER(partition by visitname,siteid ORDER by visitdate ASC)::text AS visitname,
+			visitdate,
+			smvipyn,
+			smvpiyn,
+			smvtrvld,
+			smvtrvlu,
+			smvvtype,
+			smvmethd
+			from (
+                SELECT  replace("protocol_#",'-','_')::text AS studyid,
+ 						case when"site_#" is not null 
+                        	then concat('TAS120_202_',"site_#")
+                        	end::text AS siteid,
+						account_name::text AS visitname,
+						visit_start::date AS visitdate,
 						null::text AS smvipyn,
 						null::text AS smvpiyn,
-						extract(day from "siv_visit_end_date"::timestamp  - "siv_visit_start_date"::timestamp ) ::text AS smvtrvld,
-						'days':: text AS smvtrvlu,
-						"siv_actual_or_planned" ::text AS smvvtype
-						
-                          	from tas120_201_ctms.site_closeout
-								 
-							)
+						null ::text AS smvtrvld,
+						null:: text AS smvtrvlu,
+						visit_type ::text AS smvvtype,
+						visit_status ::text as smvmethd
+                          	from tas120_202_ctms.monvisit_tracker
+                          	where visit_start is not null
+							)a)
 
 SELECT 
         /*KEY (smv.studyid || '~' || smv.siteid)::text AS comprehendid, KEY*/
@@ -33,7 +44,8 @@ SELECT
 		smv.smvpiyn::text AS smvpiyn,
 		smv.smvtrvld::text AS smvtrvld,
 		smv.smvtrvlu:: text AS smvtrvlu,
-		smv.smvvtype::text AS smvvtype
+		smv.smvvtype::text AS smvvtype,
+		smv.smvmethd::text AS smvmethd
         /*KEY , (smv.studyid || '~' || smv.siteid || '~' || smv.visitName)::text  AS objectuniquekey KEY*/
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM sitemonitoringvisit_data smv

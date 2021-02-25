@@ -69,3 +69,4 @@ SELECT
         /*KEY , now()::timestamp without time zone AS comprehend_update_time KEY*/
 FROM fielddata fd
 JOIN included_subjects s ON (fd.studyid = s.studyid AND fd.siteidjoin = s.siteidjoin AND fd.usubjid = s.usubjid);
+

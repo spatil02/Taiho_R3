@@ -29,3 +29,4 @@ SELECT
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM sitemilestone_data sm
 JOIN included_sites si ON (sm.studyid = si.studyid AND sm.siteid = si.siteid); 
+

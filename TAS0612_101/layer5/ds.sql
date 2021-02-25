@@ -109,7 +109,7 @@ es."Subject"::text AS usubjid,
 'Completion'::text AS dscat,
 'Withdrawn'::text AS dsterm,
 es."EOSDAT"::DATE AS dsstdtc,
-es."EOSREAS"::text AS dsscat  
+case when es."EOSREAS" = '' then 'Missing' else es."EOSREAS" end ::text AS dsscat  
 from tas0612_101."EOS" es
 where es."EOSREAS" <> 'Study Completion'
 
@@ -147,3 +147,4 @@ SELECT
         /*KEY , now()::TIMESTAMP WITH TIME ZONE AS comprehend_update_time KEY*/
 FROM ds_data ds
 JOIN included_subjects s ON (ds.studyid = s.studyid AND ds.siteid = s.siteid AND ds.usubjid = s.usubjid);
+

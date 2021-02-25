@@ -12,7 +12,7 @@ WITH included_subjects AS (
 						concat('TAS0612_101_',split_part("SiteNumber",'_',2))::text AS siteid,
                         "Subject"::text AS usubjid, 
                         "FolderSeq"::numeric AS visitnum,
-                        "FolderName"::text AS visit,
+                        trim("InstanceName")::text AS visit,
                         1::int AS visitseq, /* defaulted to 1 - deprecated */
                         min("VISITDAT")::date AS svstdtc,
                         max("VISITDAT")::date AS svendtc
@@ -24,7 +24,7 @@ WITH included_subjects AS (
                                     --concat('TAS0612_101_',split_part(fd.siteid,'_',2))::text AS siteid,
                                     fd.usubjid,
                                     99::numeric AS visitnum, -- will be updated by cleanup script
-                                    fd.visit,
+                                    trim(fd.visit) as visit,
                                     coalesce(datacollecteddate,dataentrydate)::date AS svstdtc,
                                     coalesce(datacollecteddate,dataentrydate)::date AS svendtc
                             FROM formdata fd
@@ -77,3 +77,4 @@ SELECT
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM all_visits sv
 JOIN included_subjects s ON (sv.studyid = s.studyid AND sv.siteid = s.siteid AND sv.usubjid = s.usubjid);
+

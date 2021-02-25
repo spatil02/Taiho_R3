@@ -88,7 +88,7 @@ WITH included_subjects AS (
 						'Completion'::text AS dscat,
 						'Withdrawn'::text AS dsterm,
 						eos."EOSDAT"::DATE AS dsstdtc,
-						eos."EOSREAS"::text AS dsscat  
+						case when eos."EOSREAS" = '' then 'Missing' else eos."EOSREAS" end ::text AS dsscat
 				from "tas120_202"."EOS" eos
 				where eos."EOSREAS" <> 'End of study per protocol'
 				

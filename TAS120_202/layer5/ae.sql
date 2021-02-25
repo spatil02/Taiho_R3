@@ -21,7 +21,8 @@ WITH included_subjects AS (
 							when("AEGR")= '2' then 'G2'
 							when("AEGR")= '3' then 'G3'
 							when("AEGR")= '4' then 'G4'
-							when("AEGR")= '5' then 'G5'
+							when("AEGR")= '5' then 'G5'									   
+		                    when(("AEGR")= '' or ("AEGR") is null) then 'Missing'
 							end ::text AS aesev,
                        case when lower(ae."AESER")='yes' then 'Serious' 
 							when lower(ae."AESER")='no' then 'Non-Serious' 

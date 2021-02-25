@@ -11,8 +11,8 @@ WITH included_subjects AS (
                         concat('TAS0612_101_',left("sitename"::text, strpos("sitename", '_') - 1))::text AS siteId,
                         "subjectname"::text AS usubjId,
                         "id_"::text AS queryId,
-                        "folder"::text AS formId,
-						"form"::text AS visit,
+                        "form"::text AS formId,
+						"folder"::text AS visit,
 						1::int AS formseq,
 						"log"::int AS log_num,
                         "field"::text AS fieldId,
@@ -48,3 +48,4 @@ SELECT
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM query_data q
 JOIN included_subjects s ON (q.studyid = s.studyid AND q.siteid = s.siteid AND q.usubjid = s.usubjid);
+

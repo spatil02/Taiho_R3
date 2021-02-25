@@ -5,29 +5,42 @@ Notes: Standard mapping to CCDM StudyMilestone table
 
 WITH included_studies AS (
                 SELECT studyid FROM study ),
+                
+  studymilestoneseq as (
+   select  sm."milestones" as milestonelabel,
+   row_number() over(order by convert_to_date(sm."planned_date")) as milestoneseq
+   from tas0612_101_study_milestone.study_milestone sm
+    where  nullif(sm."planned_date",'')  is not null
+   
+  ),
 	
      studymilestone_data AS (
-     select sm.studyid,
-     row_number() over(partition by studyid order by expecteddate) as milestoneseq,
-     sm.milestonelabel,
-     milestonetype,
-     sm.expecteddate,
-     ismandatory,
-     iscriticalpath
-     from
-     (
                 SELECT  'TAS0612_101'::text AS studyid,
-                        null::int AS milestoneseq,
+                        ms.milestoneseq::int AS milestoneseq,
                         sm."milestones"::text AS milestonelabel,
                         'Planned'::text AS milestonetype,
                         nullif(sm."planned_date",'')::date AS expecteddate,
                         'yes'::boolean AS ismandatory,
                         'yes'::boolean AS iscriticalpath
                         from tas0612_101_study_milestone.study_milestone sm
-                       
-                        )sm  where expecteddate is not null
-                       
+                        left join studymilestoneseq ms on (ms.milestonelabel = sm."milestones")
+                        where  nullif(sm."planned_date",'')  is not null  
+                                                
+                        union all
+
+                          SELECT  'TAS0612_101'::text AS studyid,
+                        ms.milestoneseq::int AS milestoneseq,
+                        sm."milestones"::text AS milestonelabel,
+                        'Actual'::text AS milestonetype,
+                        null::date AS expecteddate,
+                        'yes'::boolean AS ismandatory,
+                        'yes'::boolean AS iscriticalpath
+                        from tas0612_101_study_milestone.study_milestone sm
+                        left join studymilestoneseq ms on (ms.milestonelabel = sm."milestones")
+                         where  nullif(sm."planned_date",'')  is not null
+                         
                         )
+                        
 
 SELECT 
         /*KEY sm.studyid::text AS comprehendid, KEY*/

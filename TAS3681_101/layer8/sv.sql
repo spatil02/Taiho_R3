@@ -18,8 +18,8 @@ WITH included_subjects AS (
                                                                        null::int AS visitseq, /* defaulted to 1 - deprecated */
                                                                         "PEDAT"::date AS svstdtc,
                                                                         "PEDAT"::date AS svendtc,
-                                                                        ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ORDER BY "RecordId" ASC) AS rnk
-                                                                 , COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ) AS cnt
+                                                                        ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ORDER BY "RecordId" ASC) AS rnk
+                                                                 , COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ) AS cnt
                                                                 from tas3681_101."PE"
                                             ) A
 
@@ -42,8 +42,8 @@ svstdtc
                                                                null::int AS visitseq, /* defaulted to 1 - deprecated */
                                                                 "CYCLEDAT"::date AS svstdtc,
                                                                 "CYCLEDAT"::date AS svendtc
-                                                                 , ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ORDER BY "RecordId" ASC) AS rnk
-                                                                 , COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ) AS cnt
+                                                                 , ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ORDER BY "RecordId" ASC) AS rnk
+                                                                 , COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ) AS cnt
                                                         FROM tas3681_101."CYCLE"
 )A
 
@@ -64,8 +64,8 @@ SELECT  "project"::text AS studyid,
                                                                null::int AS visitseq, /* defaulted to 1 - deprecated */
                                                                coalesce("LBDAT","MinCreated")::date AS svstdtc,
                                                                 coalesce("LBDAT","MinCreated")::date AS svendtc
-                                                                 , ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ORDER BY "RecordId" ASC) AS rnk
-                                                                 , COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ) AS cnt
+                                                                 , ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ORDER BY "RecordId" ASC) AS rnk
+                                                                 , COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ) AS cnt
                                                         FROM tas3681_101."PSA"
 )A  
 
@@ -85,8 +85,8 @@ REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE("Inst
 null::int AS visitseq, /* defaulted to 1 - deprecated */
 "CTCDT"::date AS svstdtc,
 "CTCDT"::date AS svendtc,
-ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ORDER BY "RecordId" ASC) AS rnk,
-COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ) AS cnt
+ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ORDER BY "RecordId" ASC) AS rnk,
+COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ) AS cnt
 from tas3681_101."CTC"
 ) B
 
@@ -104,8 +104,8 @@ REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE("Inst
 null::int AS visitseq, /* defaulted to 1 - deprecated */
 "TLDAT"::date AS svstdtc,
 "TLDAT"::date AS svendtc,
-ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ORDER BY "RecordId" ASC) AS rnk,
-COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ) AS cnt
+ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ORDER BY "RecordId" ASC) AS rnk,
+COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ) AS cnt
 from tas3681_101."TL"
 ) B
 
@@ -124,8 +124,8 @@ REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE("Inst
 null::int AS visitseq, /* defaulted to 1 - deprecated */
 "NTLDAT"::date AS svstdtc,
 "NTLDAT"::date AS svendtc,
-ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ORDER BY "RecordId" ASC) AS rnk,
-COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ) AS cnt
+ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ORDER BY "RecordId" ASC) AS rnk,
+COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ) AS cnt
 from tas3681_101."NTL"
 ) B
 
@@ -143,8 +143,8 @@ REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE("Inst
 null::int AS visitseq, /* defaulted to 1 - deprecated */
 "ORDAT"::date AS svstdtc,
 "ORDAT"::date AS svendtc,
-ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ORDER BY "RecordId" ASC) AS rnk,
-COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ) AS cnt
+ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ORDER BY "RecordId" ASC) AS rnk,
+COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ) AS cnt
 from tas3681_101."OR"
 ) B
 
@@ -162,8 +162,8 @@ REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE("Inst
 null::int AS visitseq, /* defaulted to 1 - deprecated */
 "NLIMGDAT"::date AS svstdtc,
 "NLIMGDAT"::date AS svendtc,
-ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ORDER BY "RecordId" ASC) AS rnk,
-COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "FolderName" ) AS cnt
+ROW_NUMBER() OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ORDER BY "RecordId" ASC) AS rnk,
+COUNT(*) OVER (PARTITION BY "project", "SiteNumber", "Subject", "InstanceName" ) AS cnt
 from tas3681_101."NL"
 ) B
 
@@ -228,3 +228,4 @@ SELECT
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM all_visits sv
 JOIN included_subjects s ON (sv.studyid = s.studyid AND sv.siteid = s.siteid AND sv.usubjid = s.usubjid);
+

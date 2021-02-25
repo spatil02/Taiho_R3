@@ -22,7 +22,7 @@ sv_data AS (
 						"SiteNumber"::text AS siteid,
 						"Subject"::text AS usubjid, 
 						"FolderSeq"::numeric AS visitnum,
-						"FolderName"::text AS visit,
+						"InstanceName"::text AS visit,
 						null::int AS visitseq, /* defaulted to 1 - deprecated */
 						min("VISITDAT")::date AS svstdtc,
                         max("VISITDAT")::date AS svendtc
@@ -35,7 +35,7 @@ sv_data AS (
 						"SiteNumber"::text AS siteid,
 						"Subject"::text AS usubjid, 
 						"FolderSeq"::numeric AS visitnum,
-						"FolderName"::text AS visit,
+						"InstanceName"::text AS visit,
 						null::int AS visitseq, /* defaulted to 1 - deprecated */
 						min("VISITDAT")::date AS svstdtc,
                         max("VISITDAT")::date AS svendtc
@@ -47,7 +47,7 @@ sv_data AS (
 						"SiteNumber"::text AS siteid,
 						"Subject"::text AS usubjid, 
 						"FolderSeq"::numeric AS visitnum,
-						"FolderName"::text AS visit,
+						"InstanceName"::text AS visit,
 						null::int AS visitseq, /* defaulted to 1 - deprecated */
 						min("VISITDAT")::date AS svstdtc,
                         max("VISITDAT")::date AS svendtc
@@ -60,7 +60,7 @@ sv_data AS (
 						"SiteNumber"::text AS siteid,
 						"Subject"::text AS usubjid, 
 						"FolderSeq"::numeric AS visitnum,
-						"FolderName"::text AS visit,
+						"InstanceName"::text AS visit,
 						null::int AS visitseq, /* defaulted to 1 - deprecated */
 						min("VISITDAT")::date AS svstdtc,
                         max("VISITDAT")::date AS svendtc
@@ -73,7 +73,7 @@ sv_data AS (
 						"SiteNumber"::text AS siteid,
 						"Subject"::text AS usubjid, 
 						"FolderSeq"::numeric AS visitnum,
-						"FolderName"::text AS visit,
+						"InstanceName"::text AS visit,
 						null::int AS visitseq, /* defaulted to 1 - deprecated */
 						min("VISITDAT")::date AS svstdtc,
                         max("VISITDAT")::date AS svendtc

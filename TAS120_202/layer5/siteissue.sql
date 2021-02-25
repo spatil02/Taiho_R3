@@ -14,8 +14,8 @@ WITH included_sites AS (
                         category::text AS issuetext,
                         status::text AS issuestatus,
                         open_date::date AS issueopeneddate,
-                        due_date::date AS issueresponsedate,
-                        resolution_date::date AS issuecloseddate 
+                        null::date AS issueresponsedate,
+                        due_date::date AS issuecloseddate 
 from tas120_202_ctms.ai_report)
 
 SELECT 

@@ -19,11 +19,13 @@ WITH included_studies AS (
                    SELECT  'TAS0612_101'::text AS studyid,
                         'Site Activation'::text AS category,
                         'Monthly'::text AS frequency,                        
-                        max(nullif("siv", 'NULL') )::date AS enddate,
+                        max("siv")::date AS enddate,
                         'Planned'::text AS type,
                         count("site_status_icon")::int AS recruitmentcount
            From tas0612_101_ctms.site_startup_metrics
-             where trim("site_status_icon") = 'Ongoing'
+             where trim(site_status_icon) = 'Ongoing' 
+			 and "siv" not in('NULL','','N/A') 
+			 and "siv" is not null 
              union all
                     SELECT  'TAS0612_101'::text AS studyid,
                         'Screening'::text AS category,

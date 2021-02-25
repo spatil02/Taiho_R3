@@ -66,3 +66,4 @@ SELECT
 	/*KEY , now()::timestamp without time zone AS comprehend_update_time KEY*/
 FROM tv_data tv
 JOIN included_studies st ON (st.studyid = tv.studyid);
+

@@ -21,7 +21,8 @@ SELECT "project"::text AS studyid,
 							when(ae."AEGR")= '2' then 'G2'
 							when(ae."AEGR")= '3' then 'G3'
 							when(ae."AEGR")= '4' then 'G4'
-							when(ae."AEGR")= '5' then 'G5'
+							when(ae."AEGR")= '5' then 'G5'															   
+		                    when((ae."AEGR")= '' or (ae."AEGR") is null) then 'Missing'
 						end::text AS aesev,
 					   case when lower(ae."AESER")='yes' then 'Serious' 
                        when lower(ae."AESER")='no' then 'Non-Serious' 
@@ -80,3 +81,4 @@ SELECT
         /*KEY , now()::timestamp without time zone AS comprehend_update_time KEY*/
 FROM ae_data ae
 JOIN included_subjects s ON (ae.studyid = s.studyid AND ae.siteid = s.siteid AND ae.usubjid = s.usubjid);
+

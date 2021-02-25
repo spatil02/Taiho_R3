@@ -17,10 +17,8 @@ WITH included_sites AS (
 						null::text AS smvpiyn,
 						extract(day from "siv_visit_end_date"::timestamp  - "siv_visit_start_date"::timestamp ) ::text AS smvtrvld,
 						'days':: text AS smvtrvlu,
-						siv_actual_or_planned ::text AS smvvtype
-						
-                          	from tas0612_101_ctms."site_closeout"
-								 
+						siv_actual_or_planned ::text AS smvvtype						
+                          	from tas0612_101_ctms."site_closeout"					 
 							)
 
 SELECT 
@@ -38,3 +36,4 @@ SELECT
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM sitemonitoringvisit_data smv
 JOIN included_sites si ON (smv.studyid = si.studyid AND smv.siteid = si.siteid);
+

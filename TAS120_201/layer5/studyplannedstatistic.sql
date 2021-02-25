@@ -13,7 +13,9 @@ WITH included_studies AS (
                         count(site_status_icon)::int AS statval,
                         'Count'::text AS statunit
                         from tas120_201_ctms.site_startup_metrics
-						where trim(site_status_icon) = 'Ongoing'
+						where trim(site_status_icon) = 'Ongoing' 
+					   and "siv" not in('NULL','','N/A') 
+					   and "siv" is not null
 						)
 
 SELECT 

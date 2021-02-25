@@ -19,7 +19,8 @@ SELECT studyid,
 		   when(aesev)= '2' then 'G2'
 		   when(aesev)= '3' then 'G3'
 		   when(aesev)= '4' then 'G4'
-		   when(aesev)= '5' then 'G5'
+		   when(aesev)= '5' then 'G5'		   
+		   when((aesev)= '' or (aesev) is null) then 'Missing'
 		   end as aesev,
                        aeser,
                        aerelnst,
@@ -139,3 +140,4 @@ SELECT
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM ae_data ae
 JOIN included_subjects s ON (ae.studyid = s.studyid AND ae.siteid = s.siteid AND ae.usubjid = s.usubjid);
+

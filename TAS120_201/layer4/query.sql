@@ -11,7 +11,7 @@ query_data AS (
                         left("study"::text, strpos("study", ' - ') - 1)||'_'||left("sitename"::text, strpos("sitename", '_') - 1)::text AS siteId,
                         "subjectname"::text AS usubjId,
                         "id_"::text AS queryId,
-                        "folder"::text AS formId,
+                        "form"::text AS formId,
                         "field"::text AS fieldId,
                         "querytext"::text AS querytext,
                         "markinggroupname"::text AS querytype,
@@ -19,7 +19,7 @@ query_data AS (
                         "qryopendate"::timestamp without time zone AS queryopeneddate, 
                         nullif ("qryresponsedate", '')::timestamp without time zone AS queryresponsedate,
                         nullif ("qrycloseddate", '')::timestamp without time zone AS querycloseddate,
-                        "form"::text AS visit,
+                        "folder"::text AS visit,
                         1::int AS formseq,
                         "log"::int AS log_num,
                         null::text AS querycreator 
@@ -47,3 +47,4 @@ SELECT
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM query_data q
 JOIN included_subjects s ON (q.studyid = s.studyid AND q.siteid = s.siteid AND q.usubjid = s.usubjid);
+

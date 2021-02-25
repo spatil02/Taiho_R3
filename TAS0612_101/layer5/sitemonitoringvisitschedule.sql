@@ -25,3 +25,4 @@ SELECT
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM sitemonitoringvisitschedule_data smvs
 JOIN included_sites si ON (smvs.studyid = si.studyid AND smvs.siteid = si.siteid); 
+

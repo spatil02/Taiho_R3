@@ -17,7 +17,7 @@ ie_data AS
     row_number() OVER (PARTITION BY 'TAS120_201',"SiteNumber","Subject" ORDER BY serial_id)::integer AS ieseq,
     "IETESTCD"::text AS ietestcd,
     "IETESTCD"::text AS ietest,
-    null::text AS iecat,
+    nullif("IECAT",'')::text AS iecat,
     null::text AS iescat
 	from tas120_201."IE"					
 )

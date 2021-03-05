@@ -40,7 +40,8 @@ ROW_NUMBER () OVER (PARTITION BY studyid, siteid, usubjid ORDER BY aestdtc) as a
                       aeacn
                       from 
      
- (    
+ (   
+ select *  from (
 SELECT
 "project"::text AS studyid ,
 "SiteNumber"::text AS siteid ,
@@ -58,7 +59,7 @@ CASE
     WHEN "AEREL" IN ('possibly related','definitely related','probably related','Related') THEN 'Yes'
     WHEN "AEREL" IN('unrelated','Not Reasonably Possible','Not Related') THEN 'No'
     ELSE 'Unknown' END::text as aerelnst,
-"RecordPosition"::int AS aeseq ,
+"PageRepeatNumber"::int AS aeseq ,
 "AESTDAT"::timestamp without time zone AS aesttm ,
 "AEENDAT"::timestamp without time zone AS aeentm ,
 "AETERM_LLT"::text AS aellt ,
@@ -71,11 +72,14 @@ CASE
 NULL::text AS aebdsycd ,
 "AETERM_SOC"::text AS aesoc ,
 "AETERM_SOC_CD"::int AS aesoccd ,
-COALESCE("AEACTSN","AEACTSDR","AEACTSID","AEACTSDQ") as aeacn
-from tas120_201."AE"
+COALESCE("AEACTSN","AEACTSDR","AEACTSID","AEACTSDQ") as aeacn,
+rank() over (partition by "Subject", "PageRepeatNumber" order by "AESTDAT" desc) as rank
+from tas120_201."AE") a
+where a.rank = 1
 
-UNION ALL
+UNION all
 
+select * from (
 Select
 "project"::text AS studyid,
 "SiteNumber"::text AS siteid,
@@ -92,7 +96,7 @@ case when lower("AESER")='yes' then 'Serious'
 CASE WHEN "AEREL" IN ('possibly related','definitely related','probably related','Related') THEN 'Yes'
      WHEN "AEREL" IN('unrelated','Not Reasonably Possible','Not Related') THEN 'No'
     ELSE 'Unknown' END::text as aerelnst,
-"RecordPosition"::int AS aeseq,
+"PageRepeatNumber"::int AS aeseq,
 "AESTDAT"::timestamp without time zone AS aesttm,
 "AEENDAT"::timestamp without time zone AS aeentm,
 "AETERM_LLT"::text AS aellt,
@@ -105,8 +109,11 @@ case when "AETERM_HLGT_CD"='' then NULL ELSE "AETERM_HLGT_CD" END::int AS aehlgt
 NULL::text AS aebdsycd,
 "AETERM_SOC"::text AS aesoc,
 case when "AETERM_SOC_CD"='' then NULL ELSE "AETERM_SOC_CD" END::int AS aesoccd,
-COALESCE("AEACTSN","AEACTSDR","AEACTSID","AEACTSDQ") as aeacn
+COALESCE("AEACTSN","AEACTSDR","AEACTSID","AEACTSDQ") as aeacn,
+rank() over (partition by "Subject", "PageRepeatNumber" order by "AEGRDAT" desc) as rank
 from tas120_201."AE2" ) a
+where a.rank = 1
+)a
 )
 
 SELECT 

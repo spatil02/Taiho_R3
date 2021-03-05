@@ -43,7 +43,7 @@ WITH included_subjects AS (
                         				then "IETESTCD"
                         	end
                         	end)::text AS ietest,
-                        null::text AS iecat,
+                        nullif("IECAT",'')::text AS iecat,
                         null::text AS iescat
                 from tas3681_101."IE"	ie	
 				group by 1,2,3,4,5,7,10,11

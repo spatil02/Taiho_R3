@@ -7,20 +7,17 @@ WITH included_subjects AS (
                 SELECT DISTINCT studyid, siteid, usubjid FROM subject ),
 
      ie_data AS (
-	 
-                SELECT "project"::text AS studyid,
-					   "SiteNumber"::text AS siteid,
-					   "Subject"::text  AS usubjid,
-					   "FolderSeq"::numeric  AS visitnum,
-					   "FolderName"::text  AS visit,
-					   COALESCE("MinCreated", "RecordDate")::date  AS iedtc,
-					   nullif("IECAT",'')::text  AS iecat,
-					   null::text AS iescat,
-					   "IETESTCD"::text AS ietest,
-					   "IETESTCD"::text  AS ietestcd,
-					   row_number() OVER (PARTITION BY ie.studyid, ie.siteid, ie."Subject" ORDER BY ie."serial_id")::integer AS ieseq
-				FROM   "tas120_202"."IE" ie 
-				)
+                SELECT  null::text AS studyid,
+                        null::text AS siteid,
+                        null::text AS usubjid,
+                        null::numeric AS visitnum,
+                        null::text AS visit,
+                        null::date AS iedtc,
+                        null::integer AS ieseq,
+                        null::text AS ietestcd,
+                        null::text AS ietest,
+                        null::text AS iecat,
+                        null::text AS iescat )
 
 SELECT 
         /*KEY (ie.studyid || '~' || ie.siteid || '~' || ie.usubjid)::text AS comprehendid, KEY*/
@@ -38,4 +35,5 @@ SELECT
         /*KEY , (ie.studyid || '~' || ie.siteid || '~' || ie.usubjid || '~' || ie.ieseq)::text  AS objectuniquekey KEY*/
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM ie_data ie 
-JOIN included_subjects s ON (ie.studyid = s.studyid AND ie.siteid = s.siteid AND ie.usubjid = s.usubjid);
+JOIN included_subjects s ON (ie.studyid = s.studyid AND ie.siteid = s.siteid AND ie.usubjid = s.usubjid)
+WHERE 1=2;

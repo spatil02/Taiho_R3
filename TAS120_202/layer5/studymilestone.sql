@@ -18,7 +18,7 @@ WITH included_studies AS (
      milestoneseq,
      case when milestonelabel = 'First Subject Enrolled' then 'FIRST SUBJECT IN'
      when milestonelabel = 'Last Subject Enrolled' then 'LAST SUBJECT IN'
-     when milestonelabel = 'First Site Activated' then 'FIRST SITE READY TO ENROLL' 
+     when milestonelabel = 'First Site Initiated' then 'FIRST SITE READY TO ENROLL' 
 	when milestonelabel = 'Last Site Activated' then 'ALL SITES ACTIVATED'	 
      else milestonelabel end as milestonelabel,
      milestonetype,
@@ -44,7 +44,7 @@ WITH included_studies AS (
                         ms.milestoneseq::int AS milestoneseq,
                         sm."type"::text AS milestonelabel,
                         'Actual'::text AS milestonetype,
-                        null::date AS expecteddate,
+                        sm.actual_date::date AS expecteddate,
                         'yes'::boolean AS ismandatory,
                         'yes'::boolean AS iscriticalpath
                         from tas120_202_ctms.milestone sm 

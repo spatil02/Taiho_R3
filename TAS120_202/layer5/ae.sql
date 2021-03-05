@@ -8,6 +8,7 @@ WITH included_subjects AS (
 
 
     ae_data AS (
+                 select * from (
                  SELECT "project"::text AS studyid,
                        "SiteNumber"::text AS siteid,
                        "Subject"::text AS usubjid,
@@ -30,8 +31,9 @@ WITH included_subjects AS (
 					   CASE WHEN ae."AEREL" IN ('possibly related','definitely related','probably related','Related') THEN 'Yes'
 							WHEN ae."AEREL" IN('unrelated','Not Reasonably Possible','Not Related') THEN 'No'
 							ELSE 'Unknown' END::text as aerelnst,
-                       ROW_NUMBER () OVER (PARTITION BY "project", ae."SiteNumber", ae."Subject" ORDER BY ae."AESTDAT")::int AS aeseq,
-                       "AESTDAT"::timestamp without time zone AS aesttm,
+                       --ROW_NUMBER () OVER (PARTITION BY "project", ae."SiteNumber", ae."Subject" ORDER BY ae."AESTDAT")::int AS aeseq,
+                       "PageRepeatNumber" ::int AS aeseq,
+					   "AESTDAT"::timestamp without time zone AS aesttm,
                        "AEENDAT"::timestamp without time zone AS aeentm,
 					   null::text AS aellt,
 					   null::int AS aelltcd,
@@ -43,11 +45,12 @@ WITH included_subjects AS (
 					   null::int AS aebdsycd,
 					   null::text AS aesoc,
 					   null::int AS aesoccd,
-					   coalesce("AEACTSN" ,"AEACTSDR" ,"AEACTSID" ,"AEACTSDQ") ::text  AS aeacn
-				FROM "tas120_202"."AE" ae)
-
-
-
+					   coalesce("AEACTSN" ,"AEACTSDR" ,"AEACTSID" ,"AEACTSDQ") ::text  AS aeacn,
+					   rank() over (partition by "Subject", "PageRepeatNumber" order by "AEGRDAT" desc) as rank
+				FROM "tas120_202"."AE" ae)a
+				where rank = 1		
+				)
+				
 SELECT
         /*KEY (ae.studyid || '~' || ae.siteid || '~' || ae.usubjid)::text AS comprehendid, KEY*/
         ae.studyid::text AS studyid,

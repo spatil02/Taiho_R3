@@ -103,7 +103,7 @@ WITH included_subjects AS (
 						'Treatment'::text AS dscat,
 						'Early EOT'::text AS dsterm,
 						eot."EOTDAT"::DATE AS dsstdtc,
-						null::text AS dsscat  
+						eot."EOTREAS"::text AS dsscat  
 				from "tas120_202"."EOT" eot
 			--	where eot."EOTREAS" <> 'End of study per 2 protocol'
 				

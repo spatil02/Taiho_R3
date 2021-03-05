@@ -9,7 +9,7 @@ WITH included_sites AS (
      sitemonitoringvisitschedule_data AS (
              select studyid, 
 					siteid,
-					 visitname||'~' || row_number() OVER(partition by visitname,siteid ORDER by plannedvisitdate ASC)::text AS visitname
+					 visitname||'~' || row_number() OVER(partition by visitname,siteid ORDER by startdate,smvvtype ASC)::text AS visitname
 					, plannedvisitdate
 					, smvvtype
 					from (     
@@ -19,7 +19,8 @@ WITH included_sites AS (
                         	end::text AS siteid,
 						"account_name"::text AS visitname,
 						 "planned_date" ::date AS plannedvisitdate,
-						 null::text as smvvtype
+						 "visit_type"::text as smvvtype,
+						 "visit_start"::date as startdate
 			 from tas120_202_ctms.monvisit_tracker)a)
 
 SELECT 
@@ -33,3 +34,4 @@ SELECT
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM sitemonitoringvisitschedule_data smvs
 JOIN included_sites si ON (smvs.studyid = si.studyid AND smvs.siteid = si.siteid);
+

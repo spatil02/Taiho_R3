@@ -7,50 +7,24 @@ WITH included_sites AS (
                 SELECT DISTINCT studyid, siteid FROM site ),
 
      sitemonitoringvisitreport_data AS (
-	 select studyid,
-     		siteid,
-     		sitename,
-     		investigatorname,
-     		subjectsenrolled,
-     		visitname||'~' || row_number() OVER(partition by visitname,siteid ORDER by visitcompleteddate ASC)::text AS visitname,
-     		visitcompleteddate,
-     		effort,
-     		effortunit,
-     		craname,
-     		comonitor,
-     		approvername,
-     		reporttype,
-     		firstsubmissiondate,
-     		firstsubmissioncompleteddays,
-     		revisioncount,
-     		finalapprovaldate,
-     		finalapprovalcompleteddays
-			from
-			(
-                SELECT  replace("protocol_#",'-','_')::text AS studyid,
- 						case when"site_#" is not null 
-                        	then concat('TAS120_202_',"site_#")
-                        	end::text AS siteid,
-                        account_name::text AS sitename,
-                        pi_name::text AS investigatorname,
+                SELECT  null::text AS studyid,
+                        null::text AS siteid,
+                        null::text AS sitename,
+                        null::text AS investigatorname,
                         null::int AS subjectsenrolled,
-                        account_name_2::text AS visitname,
-                        visit_end::date AS visitcompleteddate,
+                        null::text AS visitname,
+                        null::date AS visitcompleteddate,
                         null::numeric AS effort,
                         null::text AS effortunit,
-                        monitor::text AS craname,
-                        lm_name::text AS comonitor,
-                        monitor::text AS approvername,
+                        null::text AS craname,
+                        null::text AS comonitor,
+                        null::text AS approvername,
                         null::text AS reporttype,
                         null::date AS firstsubmissiondate,
                         null::int AS firstsubmissioncompleteddays,
-                        1::int AS revisioncount,
+                        null::int AS revisioncount,
                         null::date AS finalapprovaldate,
-                        null::int AS finalapprovalcompleteddays
-               from   tas120_202_ctms.monvisit_tracker
-               where account_name_2 is not null
-			   )a
-			   )
+                        null::int AS finalapprovalcompleteddays )
 
 SELECT 
         /*KEY (smvr.studyid || '~' || smvr.siteid)::text AS comprehendid, KEY*/
@@ -75,5 +49,5 @@ SELECT
         /*KEY , (smvr.studyid || '~' || smvr.siteid || '~' || smvr.visitname || '~' || smvr.revisioncount)::text  AS objectuniquekey KEY*/
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM sitemonitoringvisitreport_data smvr
-JOIN included_sites si ON (smvr.studyid = si.studyid AND smvr.siteid = si.siteid);
-
+JOIN included_sites si ON (smvr.studyid = si.studyid AND smvr.siteid = si.siteid)
+WHERE 1=2;

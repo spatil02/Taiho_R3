@@ -19,7 +19,7 @@ WITH included_subjects AS (
                         		when "IEYN"='No' 
                         				then "IETESTCD"
                         	end)::text AS ietest,
-                        null::text AS iecat,
+                        nullif("IECAT",'')::text AS iecat,
                         null::text AS iescat
                 from tas0612_101."IE"	ie	
 				group by "project","SiteNumber","Subject","FolderSeq","FolderName","serial_id",iecat,iescat

@@ -9,7 +9,7 @@ WITH included_sites AS (
      sitemonitoringvisit_data AS (
      select studyid,
 			siteid,
-			 visitname||'~' || row_number() OVER(partition by visitname,siteid ORDER by visitdate ASC)::text AS visitname,
+			 visitname||'~' || row_number() OVER(partition by visitname,siteid ORDER by visitdate,smvvtype ASC)::text AS visitname,
 			visitdate,
 			smvipyn,
 			smvpiyn,

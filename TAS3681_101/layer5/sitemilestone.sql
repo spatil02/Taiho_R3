@@ -22,7 +22,7 @@ WITH included_sites AS (
                         sm."milestone_name"::text AS milestonelabel,
                         'Actual'::text AS milestonetype,
                         nullif(sm."actual_date",'')::date AS expecteddate,
-                        'yes'::boolean AS ismandatory 
+                        'yes'::boolean AS ismandatory
 					from tas3681_101_ctms.site_milestones sm
 	UNION ALL
 	 SELECT  			'TAS3681_101'::text AS studyid,
@@ -44,7 +44,10 @@ SELECT
         sm.milestonelabel::text AS milestonelabel,
         sm.milestonetype::text AS milestonetype,
         sm.expecteddate::date AS expecteddate,
-        sm.ismandatory::boolean AS ismandatory
+        sm.ismandatory::boolean AS ismandatory,
+        'startup'::text as milestonebucketid,
+		true::boolean as iskeymilestone,
+		true::boolean as startkeymilestone
         /*KEY, (sm.studyid || '~' || sm.siteid || '~' || sm.milestonetype || '~' || sm.milestoneseq)::text  AS objectuniquekey KEY*/
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM sitemilestone_data sm

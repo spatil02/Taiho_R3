@@ -54,7 +54,10 @@ WITH included_studies AS (
                         null::text AS sitestate,
                         postal_code::text AS sitepostal,
                         site_status::text AS sitestatus,
-                        null::date AS sitestatusdate
+                        case when site_status = 'Activated' then nullif(site_activated_date,'')
+                             when site_status = 'Selected' then nullif(site_selected_date,'')
+                             when site_status in ('Recommended', 'Back-up') then coalesce (nullif(site_activated_date,''),nullif(site_selected_date,''))
+                        end::date AS sitestatusdate
 			From tas3681_101_ctms.sites s1
 			where length(country_code)<=2 and country_code <> ''--siteid TAS3681101_105 excluded due to invalid data in source
 				/*LIMIT LIMIT 100 LIMIT*/)

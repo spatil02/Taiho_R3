@@ -40,7 +40,7 @@ WITH included_subjects AS (
                         	else 
                         		case 
                         			when "IEYN"='No' 
-                        				then "IETESTCD"
+                        				then concat("IETESTCD",'-',"IERANOTH")
                         	end
                         	end)::text AS ietest,
                         nullif("IECAT",'')::text AS iecat,

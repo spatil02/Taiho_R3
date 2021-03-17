@@ -46,8 +46,11 @@ WITH included_studies AS (
                         null::text AS sitecity,
                         null::text AS sitestate,
                         null::text AS sitepostal,
-                        null::text AS sitestatus,
-                        null::date AS sitestatusdate 
+                        case 
+                       	when "active"='Yes' then 'Activated'
+                       	else 'Inactive' end::text AS sitestatus,
+                       case 
+                       	when "active"='Yes' then "effectivedate" else null end ::date AS sitestatusdate
 						from tas120_201."__sites"
 						/*LIMIT LIMIT 100 LIMIT*/)
 

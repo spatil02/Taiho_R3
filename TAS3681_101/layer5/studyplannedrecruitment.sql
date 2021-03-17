@@ -8,44 +8,88 @@ WITH included_studies AS (
                 SELECT studyid FROM study ),
                 
  Subject_count AS (
-                SELECT count(*) as sub_cnt FROM tas3681_101_ctms.subjects 
-                where subject_status in ('Completed','Screening')),
+               select count(*) as sub_cnt, extract (month from completed_date::date) as month,
+                extract (year from completed_date::date) as year FROM tas3681_101_ctms.subjects 
+                where subject_status in ('Completed','Screening')
+                and nullif(completed_date,'') is not null
+                group by 2,3),
+                
+ max_date_sub as (
+ select month, year, max(completed_date) as completed_date from (	
+select distinct completed_date::date as completed_date,extract(month from completed_date::date) as month,
+extract(year from completed_date::date) as year
+from tas3681_101_ctms.subjects
+ where nullif(completed_date,'') is not null
+)a group by 1, 2
+ 
+ ),
                 
  site_count AS (
-                SELECT count(*) as site_cnt FROM tas3681_101_ctms.site_visits 
-                where visit_status in ('Completed','Projected','Scheduled')),
+                select count(*) as site_cnt, extract (month from planned_visit_date::date) as month,
+                extract (year from planned_visit_date::date) as year
+                from   tas3681_101_ctms.site_visits
+				where visit_status in ('Completed','Projected','Scheduled')
+				group by 2,3
+                ),
+                
+ max_date_site as ( 
+ select month, year, max(planned_visit_date) as planned_visit_date from (	
+select distinct planned_visit_date::date as planned_visit_date,extract(month from planned_visit_date::date) as month,
+extract(year from planned_visit_date::date) as year
+from tas3681_101_ctms.site_visits
+)a group by 1, 2
+               
+ ),
+ 
+                
 screen_count AS (
-				select count(*) as screen_cnt FROM tas3681_101_ctms.subject_visits 
-				where visit_reference = 'SCR'),
+                 select count(*) as screen_cnt, extract (month from screening_date::date) as month,
+                extract (year from screening_date::date) as year FROM tas3681_101_ctms.subject_visits
+				where visit_reference = 'SCR'
+				group by 2,3),
+				
+max_date_scr as (
+ select month, year, max(screening_date) as screening_date from (	
+select distinct screening_date::date as screening_date,extract(month from screening_date::date) as month,
+extract(year from screening_date::date) as year
+from tas3681_101_ctms.subject_visits
+)a group by 1, 2
+ 
+ ),
 
 
      studyplannedrecruitment_data AS (
                 SELECT  'TAS3681_101'::text AS studyid,
                         'Enrollment'::text AS category,
                         'Monthly'::text AS frequency,
-                       max(nullif(completed_date,''))::date AS enddate,
+                       msub.completed_date::date AS enddate,
                         'Planned'::text AS type,
                         sc.sub_cnt ::int AS recruitmentcount
-               From tas3681_101_ctms.subjects ,  Subject_count sc
-               group by 1,2,3,5,6
+               From  max_date_sub msub,  Subject_count sc
+                where sc.month = msub.month
+            and sc.year = msub.year
+              
                union all
+               
                    SELECT  'TAS3681_101'::text AS studyid,
                         'Site Activation'::text AS category,
                         'Monthly'::text AS frequency,
-                        max(planned_visit_date)::date AS enddate,
+                        msite.planned_visit_date::date AS enddate,
                         'Planned'::text AS type,
                         sc.site_cnt ::int AS recruitmentcount
-            From tas3681_101_ctms.site_visits , site_count sc
-             group by 1,2,3,5,6
+            From site_count sc, max_date_site msite
+            where sc.month = msite.month
+            and sc.year = msite.year
 			 union all
                    SELECT  'TAS3681_101'::text AS studyid,
                         'Screening'::text AS category,
                         'Monthly'::text AS frequency,
-                        max(screening_date)::date AS enddate,
+                        mscr.screening_date::date AS enddate,
                         'Planned'::text AS type,
                         sc.screen_cnt ::int AS recruitmentcount
-            From tas3681_101_ctms.subject_visits , screen_count sc
-             group by 1,2,3,5,6
+            from max_date_scr mscr , screen_count sc
+             where sc.month = mscr.month
+            and sc.year = mscr.year
                 )
 
 SELECT

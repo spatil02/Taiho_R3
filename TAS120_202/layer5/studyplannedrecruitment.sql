@@ -12,7 +12,7 @@ WITH included_studies AS (
                         'Monthly'::text AS frequency,
                        max("ENRDAT")::date AS enddate,
                         'Planned'::text AS type,
-                        count("ENRYN") ::int AS recruitmentcount
+                        '115' ::int AS recruitmentcount
               From tas120_202."ENR"
 			   where "ENRYN" = 'Yes'
                

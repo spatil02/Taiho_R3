@@ -49,7 +49,7 @@ WITH included_subjects AS (
                         null::text AS  lbstint,
                         null::numeric AS  lbuloq,
                         null::text AS  lbclsig
-			From        tas0612_101."NormLab" lb1 
+			From        tas0612_101_lab."NormLab" lb1 
 			LEFT JOIN tas0612_101."CHEM" chem on (lb1."project" = chem."project" AND lb1."SiteNumber"= chem."SiteNumber" AND lb1."Subject" = chem."Subject" AND lb1."InstanceName" = chem."InstanceName")
 			LEFT JOIN tas0612_101."COAG" coag on (lb1."project" = coag."project" AND lb1."SiteNumber" = coag."SiteNumber" AND lb1."Subject" = coag."Subject" AND lb1."InstanceName" = coag."InstanceName")
 			LEFT JOIN tas0612_101."HEMA" hem on (lb1."project" = hem."project" AND lb1."SiteNumber" = hem."SiteNumber" AND lb1."Subject" = hem."Subject" AND lb1."InstanceName" = hem."InstanceName")	

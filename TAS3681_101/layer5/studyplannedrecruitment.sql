@@ -41,11 +41,12 @@ from tas3681_101_ctms.site_visits
                
  ),
  
-                
+               
 screen_count AS (
                  select count(*) as screen_cnt, extract (month from screening_date::date) as month,
                 extract (year from screening_date::date) as year FROM tas3681_101_ctms.subject_visits
 				where visit_reference = 'SCR'
+				and nullif(screening_date,'') is not null
 				group by 2,3),
 				
 max_date_scr as (
@@ -53,6 +54,7 @@ max_date_scr as (
 select distinct screening_date::date as screening_date,extract(month from screening_date::date) as month,
 extract(year from screening_date::date) as year
 from tas3681_101_ctms.subject_visits
+where nullif(screening_date,'') is not null
 )a group by 1, 2
  
  ),

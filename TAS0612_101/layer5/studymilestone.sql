@@ -17,7 +17,7 @@ WITH included_studies AS (
      studymilestone_data AS (
                 SELECT  'TAS0612_101'::text AS studyid,
                         ms.milestoneseq::int AS milestoneseq,
-                        sm."milestones"::text AS milestonelabel,
+                        replace (sm."milestones", 'Last Subject 1st Visit Planned  ','LAST SUBJECT IN')::text AS milestonelabel,
                         'Planned'::text AS milestonetype,
                         nullif(sm."planned_date",'')::date AS expecteddate,
                         'yes'::boolean AS ismandatory,
@@ -30,7 +30,7 @@ WITH included_studies AS (
 
                           SELECT  'TAS0612_101'::text AS studyid,
                         ms.milestoneseq::int AS milestoneseq,
-                        sm."milestones"::text AS milestonelabel,
+                        replace (sm."milestones", 'Last Subject 1st Visit Planned  ','LAST SUBJECT IN')::text AS milestonelabel,
                         'Actual'::text AS milestonetype,
                         null::date AS expecteddate,
                         'yes'::boolean AS ismandatory,

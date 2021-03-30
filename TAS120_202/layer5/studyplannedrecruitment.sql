@@ -110,6 +110,6 @@ SELECT
         /*KEY ,(spr.studyid || '~' || spr.category || '~' || spr.frequency || '~' || spr.enddate || '~' || spr.type)::text  AS objectuniquekey KEY*/
         /*KEY , now()::timestamp with time zone AS comprehend_update_time KEY*/
 FROM studyplannedrecruitment_data spr
-JOIN included_studies st ON (st.studyid = spr.studyid); 	 
+JOIN included_studies st ON (st.studyid = spr.studyid);
 
 

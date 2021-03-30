@@ -12,9 +12,9 @@ WITH included_subjects AS (
                  SELECT "project"::text AS studyid,
                        "SiteNumber"::text AS siteid,
                        "Subject"::text AS usubjid,
-                       "AETERM"::text AS aeterm,
-                       "AETERM"::text AS aeverbatim,
-                       "AETERM"::text AS aebodsys,
+                       "AETERM_PT"::text AS aeterm,
+                       "AETERM_PT"::text AS aeverbatim,
+                       "AETERM_SOC"::text AS aebodsys,
                        "AESTDAT"::timestamp without time zone AS aestdtc,
                        "AEENDAT"::timestamp without time zone AS aeendtc,
 					   case when("AEGR")= '0' then 'G0'

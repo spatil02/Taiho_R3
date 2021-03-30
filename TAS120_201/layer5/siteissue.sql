@@ -14,10 +14,9 @@ WITH included_sites AS (
                         issue_category_desc::text AS issuetext,
                         case when resolved = '1' then 'Closed'
                         	when resolved = '0' then 'Open' end ::text AS issuestatus,
-                        datediscovered::date AS issueopeneddate,
+                        nullif(datediscovered,'')::date AS issueopeneddate,
                         null::date AS issueresponsedate,
-                        case when dateresolved='NULL' then null else dateresolved
-                        end::date AS issuecloseddate 
+                        nullif(dateresolved,'')::date AS issuecloseddate 
 from tas120_201_ctms.issues_actions)
 
 SELECT 
